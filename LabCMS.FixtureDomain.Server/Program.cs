@@ -1,3 +1,6 @@
+using LabCMS.FixtureDomain.Server.Services;
+using LabCMS.FixtureDomain.Shared.Models;
+using LabCMS.FixtureDomain.Shared.Models.Enums;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -12,12 +15,27 @@ namespace LabCMS.FixtureDomain.Server
 {
     public class Program
     {
-        public class A
+        public static List<Fixture> mockData = Enumerable.Range(1, 100).Select(
+        item => new Fixture
         {
-            public int Value => 1 + 2;
+            ProjectNo = item.ToString(),
+            Type = FixtureType.Vibration,
+            Direction = Direction.Left,
+            SortId = 1,
+            LocationNo = new() { StockNo = 1, Floor = 2 },
+            Remark = "New Remark"
         }
-        public static void Main(string[] args)
+    ).ToList();
+
+        public static async Task Main(string[] args)
         {
+            DynamicQueryService service = new();
+            var items = await service.QueryAsync(mockData,
+                @"(IEnumerable<Fixture> items)=>
+                            items.Where(item=>item.ProjectNo.Contains(""1""))
+                                .Take(20)"
+                                
+            );
             CreateHostBuilder(args).Build().Run();
         }
 

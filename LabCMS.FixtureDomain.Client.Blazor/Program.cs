@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using AntDesign;
+using LabCMS.FixtureDomain.Shared.Models.Enums;
 
 namespace LabCMS.FixtureDomain.Client.Blazor
 {
