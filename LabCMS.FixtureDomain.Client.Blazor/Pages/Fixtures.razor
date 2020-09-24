@@ -1,0 +1,34 @@
+@page "/Fixtures"
+
+
+<Table DataSource="mockData"
+    PageIndex="_pageIndex"
+    @bind-PageSize="_pageSize"
+    Bordered="true"
+    Size="TableSize.Small"
+    >
+    
+    <Column @bind-Field="@context.ProjectNo" Sortable="true"/>
+    <Column @bind-Field="@context.Type" Sortable="true"/>
+    <Column @bind-Field="@context.Direction"/>
+    <Column @bind-Field="@context.LocationNo" />
+    <Column @bind-Field="@context.Remark" />
+</Table>
+
+
+@code{
+    private IEnumerable<Fixture>? _fixtures;
+    private int _pageSize = 10;
+    private int _pageIndex = 10;
+    public List<Fixture> mockData = Enumerable.Range(1,100).Select(
+        item=>  new Fixture
+        {
+            ProjectNo = item.ToString(),
+            Type = FixtureType.Vibration,
+            Direction = Direction.Left,
+            SortId = 1,
+            LocationNo = new(){StockNo=1,Floor=2},
+            Remark = "New Remark"
+        }
+    ).ToList();
+}
