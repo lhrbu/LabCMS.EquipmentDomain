@@ -2,7 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>25e3cb2a-3fb2-4a5e-a17a-c6050a89ad74</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="WebServices.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="WebServices.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />

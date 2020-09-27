@@ -5,6 +5,10 @@
     <ProjectReference Include="..\LabCMS.ProjectDomain.Shared\LabCMS.ProjectDomain.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Externsions\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>

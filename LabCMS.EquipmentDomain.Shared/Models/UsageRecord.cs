@@ -23,7 +23,9 @@ namespace LabCMS.EquipmentDomain.Shared.Models
         public EquipmentHourlyRate? EquipmentHourlyRate => EquipmentHourlyRateProvider
             .EquipmentHourlyRates.FirstOrDefault(item=>item.EquipmentNo==EquipmentNo);
         public string? ProjectName {get;set;}
-        public Project? Project => ProjectProvider.Projects.FirstOrDefault(item=>item.Name==ProjectName);
+        //public Project? Project => ProjectsWebAPI.Projects.FirstOrDefault(item=>item.Name==ProjectName);
+        public Project? GetProject(ProjectsWebCacheService cacheService) =>
+            cacheService.Projects.Where(item => item.Name == ProjectName).FirstOrDefault();
         public DateTimeOffset? StartTime {get;set;}
         public DateTimeOffset? EndTime {get;set;}
         public double? Duration => (EndTime-StartTime)?.TotalHours;

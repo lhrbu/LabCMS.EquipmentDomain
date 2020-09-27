@@ -4,12 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LabCMS.Gateway.Server.Repositories
 {
-    public class ServicesCenterRepository:DbContext
+    public class WebServicesRepository:DbContext
     {
-        public ServicesCenterRepository(DbContextOptions<ServicesCenterRepository> options):base(options)
-        {
-            
-        }
+        public WebServicesRepository(DbContextOptions<WebServicesRepository> options):base(options)
+        {}
         public DbSet<WebService> WebServices {get;set;}=null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

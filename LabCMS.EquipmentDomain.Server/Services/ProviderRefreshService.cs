@@ -11,7 +11,7 @@ namespace LabCMS.EquipmentDomain.Server.Services
     {
         public async Task RefreshAsync()
         {
-            await ProjectProvider.RefreshAsync();
+            await ProjectsWebAPI.RefreshAsync();
             await EquipmentHourlyRateProvider.RefreshAsync();
         }
     }

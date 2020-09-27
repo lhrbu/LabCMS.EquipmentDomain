@@ -1,4 +1,6 @@
+using LabCMS.Gateway.Shared.Extensions;
 using LabCMS.ProjectDomain.Server.Repositories;
+using LabCMS.ProjectDomain.Shared.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +38,7 @@ namespace LabCMS.ProjectDomain.Server
             });
             services.AddDbContext<ProjectsRepository>(options =>
                 options.UseSqlite(Configuration.GetConnectionString(nameof(ProjectsRepository))));
+            services.AddGateway();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +54,8 @@ namespace LabCMS.ProjectDomain.Server
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseGateway(nameof(Project));
 
             app.UseEndpoints(endpoints =>
             {

@@ -15,7 +15,7 @@ namespace LabCMS.FixtureDomain.Shared.Models
         public string? No => 
             $"{Project?.Name}-{Type.ToString().First()}-{SortId}{Direction.ToString().First()}";
         public string? ProjectNo { get; set; }
-        public Project? Project => ProjectProvider
+        public Project? Project => ProjectsWebAPI
             .Projects.FirstOrDefault(item=>item.No==ProjectNo);
         public FixtureType Type { get; set; }
         public Direction Direction { get; set; }

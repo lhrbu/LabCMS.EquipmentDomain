@@ -11,11 +11,11 @@ using LabCMS.Gateway.Server.Repositories;
 namespace LabCMS.Gateway.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class ServicesCenterController:ControllerBase
+    [Route("api/[controller]")]
+    public class WebServicesController:ControllerBase
     {
-        private readonly ServicesCenterRepository _repository;
-        public ServicesCenterController(ServicesCenterRepository repository)
+        private readonly WebServicesRepository _repository;
+        public WebServicesController(WebServicesRepository repository)
         {
             _repository=repository;
         }
@@ -33,7 +33,12 @@ namespace LabCMS.Gateway.Server.Controllers
             await _repository.WebServices.AddAsync(service);
             await _repository.SaveChangesAsync();
         }
-
+        [HttpPut]
+        public async ValueTask PutAsync(WebService service)
+        {
+            _repository.WebServices.Update(service);
+            await _repository.SaveChangesAsync();
+        }
         [HttpDelete("{id}")]
         public async ValueTask DeleteByIdAsync(Guid id)
         {

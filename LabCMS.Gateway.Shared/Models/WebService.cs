@@ -1,5 +1,5 @@
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using System;
-using System.Net.Http;
 
 namespace LabCMS.Gateway.Shared.Models
 {
@@ -7,7 +7,6 @@ namespace LabCMS.Gateway.Shared.Models
     {
         public Guid? Id {get;set;}
         public string? Name {get;set;}
-        public Uri? Uri {get;set;}
-        public HttpMethod? HttpMethod {get;set;}
+        public Uri? HostUri {get;set;}
     }
 }

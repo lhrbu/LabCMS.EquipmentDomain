@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LabCMS.Gateway.Server.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,12 +28,13 @@ namespace LabCMS.Gateway.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options=>options.JsonSerializerOptions.PropertyNamingPolicy=null);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LabCMS.Gateway.Server", Version = "v1" });
             });
+            services.AddDbContext<WebServicesRepository>(options =>
+                options.UseSqlite(Configuration.GetConnectionString(nameof(WebServicesRepository))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +46,8 @@ namespace LabCMS.Gateway.Server
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LabCMS.Gateway.Server v1"));
             }
-
+            
+            
             app.UseRouting();
 
             app.UseAuthorization();
@@ -51,6 +56,8 @@ namespace LabCMS.Gateway.Server
             {
                 endpoints.MapControllers();
             });
+            
+            
         }
     }
 }

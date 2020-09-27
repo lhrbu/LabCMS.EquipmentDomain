@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace LabCMS.FixtureDomain.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class DynamicQueryController:ControllerBase
     {
         private readonly DynamicQueryService _queryService;

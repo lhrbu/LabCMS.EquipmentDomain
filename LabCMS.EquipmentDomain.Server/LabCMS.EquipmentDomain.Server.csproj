@@ -13,4 +13,8 @@
     <ProjectReference Include="..\LabCMS.EquipmentDomain.Shared\LabCMS.EquipmentDomain.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
