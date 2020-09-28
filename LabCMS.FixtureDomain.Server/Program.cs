@@ -15,27 +15,9 @@ namespace LabCMS.FixtureDomain.Server
 {
     public class Program
     {
-        public static List<Fixture> mockData = Enumerable.Range(1, 100).Select(
-        item => new Fixture
-        {
-            ProjectNo = item.ToString(),
-            Type = FixtureType.Vibration,
-            Direction = Direction.Left,
-            SortId = 1,
-            LocationNo = new() { StockNo = 1, Floor = 2 },
-            Remark = "New Remark"
-        }
-    ).ToList();
 
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            DynamicQueryService service = new();
-            var items = await service.QueryAsync(mockData,
-                @"(IEnumerable<Fixture> items)=>
-                            items.Where(item=>item.ProjectNo.Contains(""1""))
-                                .Take(20)"
-                                
-            );
             CreateHostBuilder(args).Build().Run();
         }
 

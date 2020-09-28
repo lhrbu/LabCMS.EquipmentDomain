@@ -16,10 +16,10 @@ namespace LabCMS.ProjectDomain.Shared.Services
         private readonly WebServicesCenter _webServicesCenter;
         public ProjectsWebCacheService(WebServicesCenter webServicesCenter)
         { _webServicesCenter = webServicesCenter; }
-        public IEnumerable<Project> Projects { get; set; } = Array.Empty<Project>();
+        public IEnumerable<Project> Projects { get; private set; } = Array.Empty<Project>();
         public async Task RefreshAsync()
         {
-            WebService? projectService = await _webServicesCenter.GetByNameAsync(nameof(Project));
+            WebService? projectService = await _webServicesCenter.GetByNameAsync(nameof(ProjectDomain));
             if (projectService == null) { return; }
             Uri getUri = new(projectService.HostUri!, $"/api/{nameof(Project)}s");
             using HttpClient httpClient = new();

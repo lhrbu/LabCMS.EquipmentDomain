@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using LabCMS.Gateway.Shared.Models;
 using LabCMS.Gateway.Server.Repositories;
+using Serilog;
 
 namespace LabCMS.Gateway.Server.Controllers
 {
@@ -32,6 +33,10 @@ namespace LabCMS.Gateway.Server.Controllers
         {
             await _repository.WebServices.AddAsync(service);
             await _repository.SaveChangesAsync();
+            Log.Logger.Information(
+                "Service: {ServiceName} Registered. Uri: {HostUri}",
+                service.Name,
+                service.HostUri);
         }
         [HttpPut]
         public async ValueTask PutAsync(WebService service)
@@ -47,6 +52,9 @@ namespace LabCMS.Gateway.Server.Controllers
             {
                 _repository.WebServices.Remove(service);
                 await _repository.SaveChangesAsync();
+                Log.Logger.Information("Service: {ServiceName} Unregistered. Uri: {HostUri}",
+                    service.Name,
+                    service.HostUri);
             }
         }
     }

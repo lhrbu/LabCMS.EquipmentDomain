@@ -47,15 +47,16 @@ namespace LabCMS.ProjectDomain.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LabCMS.ProjectDomain.Server v1"));
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LabCMS.ProjectDomain.Server v1"));
+            
 
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseGateway(nameof(Project));
+            app.UseGateway(nameof(ProjectDomain));
 
             app.UseEndpoints(endpoints =>
             {

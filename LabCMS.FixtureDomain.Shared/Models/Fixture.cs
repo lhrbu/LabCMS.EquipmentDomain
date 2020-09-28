@@ -12,15 +12,16 @@ namespace LabCMS.FixtureDomain.Shared.Models
 {
     public class Fixture
     {
-        public string? No => 
-            $"{Project?.Name}-{Type.ToString().First()}-{SortId}{Direction.ToString().First()}";
+        public Guid? Id { get; set; }
         public string? ProjectNo { get; set; }
-        public Project? Project => ProjectsWebAPI
-            .Projects.FirstOrDefault(item=>item.No==ProjectNo);
         public FixtureType Type { get; set; }
         public Direction Direction { get; set; }
         public int SortId { get; set; }
         public LocationNo? LocationNo { get; set; }
         public string? Remark { get; set; }
+        public string? GetNo(ProjectsWebCacheService cacheService) =>
+            $"{GetProject(cacheService)?.Name}-{Type.ToString().First()}-{SortId}{Direction.ToString().First()}";
+        public Project? GetProject(ProjectsWebCacheService cacheService) =>
+            cacheService.Projects.FirstOrDefault(item => item.No == ProjectNo);
     }
 }

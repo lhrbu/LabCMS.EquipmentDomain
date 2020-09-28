@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using LabCMS.EquipmentDomain.Server.Services;
 
 namespace LabCMS.EquipmentDomain.Server
 {

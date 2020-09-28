@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace LabCMS.Gateway.Server
 {
@@ -46,8 +47,11 @@ namespace LabCMS.Gateway.Server
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LabCMS.Gateway.Server v1"));
             }
-            
-            
+            Log.Logger.Information("ASP NET Core now Listenning on: {Address}"
+                ,app.ServerFeatures.Get<IServerAddressesFeature>().Addresses);
+
+            app.UseSerilogRequestLogging();
+
             app.UseRouting();
 
             app.UseAuthorization();

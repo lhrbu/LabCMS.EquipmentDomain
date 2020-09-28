@@ -14,7 +14,8 @@ namespace LabCMS.FixtureDomain.Server.Repositories
         public DbSet<Fixture> Fixtures { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Fixture>().HasKey(item => new{ item.ProjectNo,item.Type,item.SortId,item.Direction});
+            modelBuilder.Entity<Fixture>().HasKey(item => item.Id);
+            modelBuilder.Entity<Fixture>().Property(item => item.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<Fixture>().OwnsOne(item => item.LocationNo);
             modelBuilder.Entity<Fixture>().Property(item => item.Type).HasConversion<string>();
         }

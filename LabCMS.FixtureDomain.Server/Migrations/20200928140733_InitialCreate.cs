@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LabCMS.FixtureDomain.Server.Migrations
 {
@@ -10,7 +11,8 @@ namespace LabCMS.FixtureDomain.Server.Migrations
                 name: "Fixtures",
                 columns: table => new
                 {
-                    ProjectNo = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ProjectNo = table.Column<string>(type: "TEXT", nullable: true),
                     Type = table.Column<string>(type: "TEXT", nullable: false),
                     Direction = table.Column<int>(type: "INTEGER", nullable: false),
                     SortId = table.Column<int>(type: "INTEGER", nullable: false),
@@ -20,7 +22,7 @@ namespace LabCMS.FixtureDomain.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Fixtures", x => new { x.ProjectNo, x.Type, x.SortId, x.Direction });
+                    table.PrimaryKey("PK_Fixtures", x => x.Id);
                 });
         }
 

@@ -1,4 +1,6 @@
 using LabCMS.FixtureDomain.Server.Repositories;
+using LabCMS.Gateway.Shared.Extensions;
+using LabCMS.ProjectDomain.Shared.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +32,7 @@ namespace LabCMS.FixtureDomain.Server
 
             services.AddControllers().AddJsonOptions(options=>
                 options.JsonSerializerOptions.PropertyNamingPolicy=null);
+            services.AddGateway();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LabCMS.FixtureDomain.Server", Version = "v1" });
@@ -51,6 +54,7 @@ namespace LabCMS.FixtureDomain.Server
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseGateway(nameof(FixtureDomain));
 
             app.UseEndpoints(endpoints =>
             {
