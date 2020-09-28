@@ -10,8 +10,4 @@
     <ProjectReference Include="..\LabCMS.ProjectDomain.Shared\LabCMS.ProjectDomain.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
