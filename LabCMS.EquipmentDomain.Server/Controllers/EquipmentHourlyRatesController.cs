@@ -3,7 +3,6 @@ using LabCMS.EquipmentDomain.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,40 +14,11 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
     [ApiController]
     public class EquipmentHourlyRatesController : ControllerBase
     {
-        private readonly UsageRecordsRepository _usageRecordsRepository;
-        public EquipmentHourlyRatesController(
-            UsageRecordsRepository usageRecordsRepository
-            )
-        { 
-            _usageRecordsRepository = usageRecordsRepository;
-        }
-
+        private readonly EquipmentHourlyRatesRepository  _repository;
+        public EquipmentHourlyRatesController(EquipmentHourlyRatesRepository repository)
+        { _repository = repository; }
         [HttpGet]
-        public IAsyncEnumerable<UsageRecord> GetAsync() =>
-            _usageRecordsRepository.UsageRecords.AsNoTracking().AsAsyncEnumerable();
-
-        [HttpPost]
-        public async ValueTask PostAsync(UsageRecord usageRecord)
-        {
-            await _usageRecordsRepository.UsageRecords.AddAsync(usageRecord);
-            await _usageRecordsRepository.SaveChangesAsync();
-        }
-
-        [HttpPut]
-        public async ValueTask PutAsync(UsageRecord usageRecord)
-        {
-            _usageRecordsRepository.UsageRecords.Update(usageRecord);
-            await _usageRecordsRepository.SaveChangesAsync();
-        }
-        [HttpDelete]
-        public async ValueTask DeleteByIdAsync(Guid id)
-        {
-            UsageRecord? usageRecord = await _usageRecordsRepository.UsageRecords.FindAsync(id);
-            if(usageRecord!=null)
-            {
-                _usageRecordsRepository.UsageRecords.Remove(usageRecord);
-                await _usageRecordsRepository.SaveChangesAsync();
-            }
-        }
+        public IAsyncEnumerable<EquipmentHourlyRate> GetAsync() =>
+            _repository.EquipmentHourlyRates.AsNoTracking().AsAsyncEnumerable();
     }
 }

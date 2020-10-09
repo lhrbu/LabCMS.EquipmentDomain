@@ -49,12 +49,23 @@
       {
         "UpStreamPathTemplate": "/api/UsageRecords",
         "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-  
+
         "ServiceName": "EquipmentDomain",
         "LoadBalancerOptions": {
           "Type": "LeastConnection"
         },
         "DownstreamPathTemplate": "/api/UsageRecords",
+        "DownstreamScheme": "http"
+      },
+      {
+        "UpStreamPathTemplate": "/api/UsageRecords/{id}",
+        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+
+        "ServiceName": "EquipmentDomain",
+        "LoadBalancerOptions": {
+          "Type": "LeastConnection"
+        },
+        "DownstreamPathTemplate": "/api/UsageRecords/{id}",
         "DownstreamScheme": "http"
       }
     ],

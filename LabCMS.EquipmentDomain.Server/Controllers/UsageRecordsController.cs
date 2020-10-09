@@ -3,6 +3,7 @@ using LabCMS.EquipmentDomain.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,40 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
     [ApiController]
     public class UsageRecordsController : ControllerBase
     {
-        private readonly UsageRecordsRepository _repository;
-        public UsageRecordsController(UsageRecordsRepository repository)
-        { _repository = repository; }
+        private readonly UsageRecordsRepository  _usageRecordsRepository;
+        public UsageRecordsController(
+            UsageRecordsRepository  usageRecordsRepository
+            )
+        { 
+            _usageRecordsRepository = usageRecordsRepository;
+        }
+
         [HttpGet]
         public IAsyncEnumerable<UsageRecord> GetAsync() =>
-            _repository.UsageRecords.AsNoTracking().AsAsyncEnumerable();
+            _usageRecordsRepository.UsageRecords.AsNoTracking().AsAsyncEnumerable();
+
+        [HttpPost]
+        public async ValueTask PostAsync(UsageRecord usageRecord)
+        {
+            await _usageRecordsRepository.UsageRecords.AddAsync(usageRecord);
+            await _usageRecordsRepository.SaveChangesAsync();
+        }
+
+        [HttpPut]
+        public async ValueTask PutAsync(UsageRecord usageRecord)
+        {
+            _usageRecordsRepository.UsageRecords.Update(usageRecord);
+            await _usageRecordsRepository.SaveChangesAsync();
+        }
+        [HttpDelete("{id}")]
+        public async ValueTask DeleteByIdAsync(Guid id)
+        {
+            UsageRecord? usageRecord = await _usageRecordsRepository.UsageRecords.FindAsync(id);
+            if(usageRecord!=null)
+            {
+                _usageRecordsRepository.UsageRecords.Remove(usageRecord);
+                await _usageRecordsRepository.SaveChangesAsync();
+            }
+        }
     }
 }

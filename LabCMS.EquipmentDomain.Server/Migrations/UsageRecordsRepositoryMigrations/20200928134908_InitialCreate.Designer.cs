@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRepositoryMigrations
 {
-    [DbContext(typeof(UsageRecordsRepository))]
+    [DbContext(typeof(UsageRecordsRepository ))]
     [Migration("20200928134908_InitialCreate")]
     partial class InitialCreate
     {

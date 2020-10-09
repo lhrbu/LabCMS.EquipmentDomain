@@ -10,9 +10,9 @@ using LabCMS.Shared.Models;
 
 namespace LabCMS.EquipmentDomain.Server.Repositories
 {
-    public class UsageRecordsRepository:DbContext
+    public class UsageRecordsRepository :DbContext
     {
-        public UsageRecordsRepository(DbContextOptions<UsageRecordsRepository> options):
+        public UsageRecordsRepository (DbContextOptions<UsageRecordsRepository > options):
             base(options)
         { }
         public DbSet<UsageRecord> UsageRecords { get; set; } = null!;

@@ -11,19 +11,19 @@ using Microsoft.Extensions.Configuration;
 
 namespace LabCMS.EquipmentDomain.Shared.Services
 {
-    public class EquipmentHourlyRateCacheService
+    public class EquipmentHourlyRatesWebCacheService
     {
         private readonly IConfiguration _configuration;
         private string GatewayUrls => _configuration["GatewayUrls"];
-        public EquipmentHourlyRateCacheService(IConfiguration configuration)
+        public EquipmentHourlyRatesWebCacheService(IConfiguration configuration)
         { _configuration = configuration; }
-        public IEnumerable<EquipmentHourlyRate> EquipmentHourlyRates { get; private set; }
+        public IEnumerable<EquipmentHourlyRate> CachedEquipmentHourlyRates { get; private set; }
             = Array.Empty<EquipmentHourlyRate>();
-        public async Task RefreshAsync()
+        public async Task RefreshCacheAsync()
         {
             Uri getUri = new($"{GatewayUrls}/api/{nameof(EquipmentHourlyRate)}s");
             using HttpClient httpClient = new();
-            EquipmentHourlyRates = (await httpClient.GetFromJsonAsync<IEnumerable<EquipmentHourlyRate>>(getUri))!;
+            CachedEquipmentHourlyRates = (await httpClient.GetFromJsonAsync<IEnumerable<EquipmentHourlyRate>>(getUri))!;
         }
 
     }

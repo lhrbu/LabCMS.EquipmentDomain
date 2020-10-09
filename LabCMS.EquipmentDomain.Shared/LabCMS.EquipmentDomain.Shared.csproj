@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LabCMS.Gateway.Shared\LabCMS.Gateway.Shared.csproj" />
     <ProjectReference Include="..\LabCMS.ProjectDomain.Shared\LabCMS.ProjectDomain.Shared.csproj" />
+    <ProjectReference Include="..\LabCMS.Shared\LabCMS.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -16,7 +16,7 @@ namespace LabCMS.FixtureDomain.Shared.Services
         { _cacheService = cacheService; }
         public string? GetNo(Fixture fixture)
         {
-            Project? project = _cacheService.Projects.FirstOrDefault(item => item.No == fixture.ProjectNo);
+            Project? project = _cacheService.CachedProjects.FirstOrDefault(item => item.No == fixture.ProjectNo);
             return $"{project?.Name}-{fixture.Type.ToString().First()}-{fixture.SortId}{fixture.Direction.ToString().First()}";
         }
     }

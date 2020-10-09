@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRepositoryMigrations
 {
-    [DbContext(typeof(UsageRecordsRepository))]
+    [DbContext(typeof(UsageRecordsRepository ))]
     partial class UsageRecordsRepositoryModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

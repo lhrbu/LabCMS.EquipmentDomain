@@ -36,8 +36,8 @@ namespace LabCMS.EquipmentDomain.Server
             });
             services.AddDbContext<EquipmentHourlyRatesRepository>(options =>
                 options.UseSqlite(Configuration.GetConnectionString(nameof(EquipmentHourlyRatesRepository))));
-            services.AddDbContext<UsageRecordsRepository>(options =>
-                options.UseSqlite(Configuration.GetConnectionString(nameof(UsageRecordsRepository))));
+            services.AddDbContext<UsageRecordsRepository >(options =>
+                options.UseSqlite(Configuration.GetConnectionString(nameof(UsageRecordsRepository ))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

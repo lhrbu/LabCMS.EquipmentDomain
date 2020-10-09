@@ -17,12 +17,12 @@ namespace LabCMS.ProjectDomain.Shared.Services
         private string GatewayUrls => _configuration["GatewayUrls"];        
         public ProjectsWebCacheService(IConfiguration configuration)
         { _configuration = configuration; }
-        public IEnumerable<Project> Projects { get; private set; } = Array.Empty<Project>();
-        public async Task RefreshAsync()
+        public IEnumerable<Project> CachedProjects { get; private set; } = Array.Empty<Project>();
+        public async Task RefreshCacheAsync()
         {
             Uri getUri = new($"{GatewayUrls}/api/{nameof(Project)}s");
             using HttpClient httpClient = new();
-            Projects = (await httpClient.GetFromJsonAsync<IEnumerable<Project>>(getUri))!;
+            CachedProjects = (await httpClient.GetFromJsonAsync<IEnumerable<Project>>(getUri))!;
         }
     }
 }
