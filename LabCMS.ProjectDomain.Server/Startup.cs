@@ -38,7 +38,6 @@ namespace LabCMS.ProjectDomain.Server
             });
             services.AddDbContext<ProjectsRepository>(options =>
                 options.UseSqlite(Configuration.GetConnectionString(nameof(ProjectsRepository))));
-            services.AddGateway();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,12 +55,12 @@ namespace LabCMS.ProjectDomain.Server
 
             app.UseAuthorization();
 
-            app.UseGateway(nameof(ProjectDomain));
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            app.UseConsulAsServiceProvider(nameof(ProjectDomain));
         }
     }
 }

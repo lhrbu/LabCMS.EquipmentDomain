@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace LabCMS.EquipmentDomain.Shared.Services
 {
-    public class UsageRecordHourlyRateProvider
+    public class EquipmentHourlyRateProviderForUsageRecord
     {
         private readonly EquipmentHourlyRateCacheService _cacheService;
-        public UsageRecordHourlyRateProvider(EquipmentHourlyRateCacheService cacheService)
+        public EquipmentHourlyRateProviderForUsageRecord(EquipmentHourlyRateCacheService cacheService)
         { _cacheService = cacheService; }
         public EquipmentHourlyRate? GetEquipmentHourlyRate(UsageRecord usageRecord)=>
             _cacheService.EquipmentHourlyRates.FirstOrDefault(item => item.EquipmentNo == usageRecord.EquipmentNo);

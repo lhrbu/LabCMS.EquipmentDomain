@@ -32,7 +32,6 @@ namespace LabCMS.FixtureDomain.Server
 
             services.AddControllers().AddJsonOptions(options=>
                 options.JsonSerializerOptions.PropertyNamingPolicy=null);
-            services.AddGateway();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LabCMS.FixtureDomain.Server", Version = "v1" });
@@ -54,12 +53,12 @@ namespace LabCMS.FixtureDomain.Server
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseGateway(nameof(FixtureDomain));
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            app.UseConsulAsServiceProvider(nameof(FixtureDomain));
         }
     }
 }

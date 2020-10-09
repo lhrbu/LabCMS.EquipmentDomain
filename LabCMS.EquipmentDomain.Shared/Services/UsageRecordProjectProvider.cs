@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace LabCMS.EquipmentDomain.Shared.Services
 {
-    public class UsageRecordProjectProvider
+    public class ProjectProviderForUsageRecord
     {
         private readonly ProjectsWebCacheService _cacheService;
-        public UsageRecordProjectProvider(
+        public ProjectProviderForUsageRecord(
             ProjectsWebCacheService cacheService)
         { _cacheService = cacheService; }
 
         public Project? GetProject(UsageRecord usageRecord)=>
-            _cacheService.Projects.FirstOrDefault(item=>item.Name==usageRecord.ProjectName)
+            _cacheService.Projects.FirstOrDefault(item=>item.Name==usageRecord.ProjectName);
     }
 }

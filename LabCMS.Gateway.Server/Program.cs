@@ -10,25 +10,24 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
+using LabCMS.Gateway.Shared.Extensions;
+
 namespace LabCMS.Gateway.Server
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .CreateLogger();
-
+            RemoteIPAddressProviderExtensions.InitializeLogger();
             CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSerilog()
+                .ConfigureAppConfiguration(builder=>{
+                    builder.AddJsonFile("OcelotSettings.json",false,true);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

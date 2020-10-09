@@ -15,9 +15,15 @@ namespace LabCMS.FixtureDomain.Server.Controllers
     [Route("api/[controller]")]
     public class FixturesController:ControllerBase
     {
+        private readonly DynamicQueryService _queryService;
         private readonly FixturesRepository _repository;
-        public FixturesController(FixturesRepository repository)
-        { _repository = repository;}
+        public FixturesController(
+            DynamicQueryService queryService,
+            FixturesRepository repository)
+        {
+            _queryService = queryService; 
+            _repository = repository;
+        }
 
         [HttpGet]
         public IAsyncEnumerable<Fixture> GetAsync()=>_repository.Fixtures.AsNoTracking().AsAsyncEnumerable();
@@ -27,6 +33,16 @@ namespace LabCMS.FixtureDomain.Server.Controllers
         {
             await _repository.Fixtures.AddAsync(fixture);
             await _repository.SaveChangesAsync();
+        }
+
+        [HttpPost("DynamicQuery")]
+        public async ValueTask<IEnumerable<Fixture>> PostAsync(string code)
+        {
+            string expression = $"(IEnumerable<Fixture> items)=>{code}";
+            return await _queryService.QueryAsync(
+                _repository.Fixtures.AsNoTracking().AsEnumerable(),
+                expression
+            );
         }
 
         [HttpPut]

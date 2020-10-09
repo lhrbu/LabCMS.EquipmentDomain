@@ -34,7 +34,6 @@ namespace LabCMS.EquipmentDomain.Server
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LabCMS.EquipmentDomain.Server", Version = "v1" });
             });
-            services.AddGateway();
             services.AddDbContext<EquipmentHourlyRatesRepository>(options =>
                 options.UseSqlite(Configuration.GetConnectionString(nameof(EquipmentHourlyRatesRepository))));
             services.AddDbContext<UsageRecordsRepository>(options =>
@@ -56,12 +55,11 @@ namespace LabCMS.EquipmentDomain.Server
 
             app.UseAuthorization();
 
-            app.UseGateway(nameof(EquipmentDomain));
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+            app.UseConsulAsServiceProvider(nameof(EquipmentDomain));
         }
     }
 }
