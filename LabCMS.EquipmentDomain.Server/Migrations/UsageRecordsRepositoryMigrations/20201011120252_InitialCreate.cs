@@ -12,6 +12,7 @@ namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRepositoryMigrati
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    User = table.Column<string>(type: "TEXT", nullable: true),
                     TestNo = table.Column<string>(type: "TEXT", nullable: true),
                     EquipmentNo = table.Column<string>(type: "TEXT", nullable: true),
                     TestType = table.Column<string>(type: "TEXT", nullable: true),

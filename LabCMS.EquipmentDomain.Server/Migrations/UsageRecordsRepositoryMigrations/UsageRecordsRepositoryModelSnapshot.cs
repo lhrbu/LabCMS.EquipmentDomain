@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRepositoryMigrations
 {
-    [DbContext(typeof(UsageRecordsRepository ))]
+    [DbContext(typeof(UsageRecordsRepository))]
     partial class UsageRecordsRepositoryModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -38,6 +38,9 @@ namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRepositoryMigrati
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TestType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("User")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

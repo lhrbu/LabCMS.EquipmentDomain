@@ -1,9 +1,7 @@
 ﻿using LabCMS.EquipmentDomain.Server.Repositories;
 using LabCMS.EquipmentDomain.Shared.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;

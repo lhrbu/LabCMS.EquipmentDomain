@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabCMS.EquipmentDomain.Server.Migrations
 {
     [DbContext(typeof(EquipmentHourlyRatesRepository))]
-    [Migration("20200928134856_InitialCreate")]
+    [Migration("20201011120232_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
