@@ -23,6 +23,7 @@ namespace LabCMS.Gateway.Shared.Extensions
                 .MinimumLevel.Override("Ocelot", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
                 .WriteTo.Console(outputTemplate: _outputTemplate)
+                .WriteTo.File("Gateway.log",outputTemplate:_outputTemplate)
                 //.WriteTo.SQLite("Logs/Log.db")
                 .CreateLogger();
         

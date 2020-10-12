@@ -61,7 +61,7 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         }
 
         [HttpPost("DynamicQuery")]
-        public IEnumerable<dynamic> DynamicQuery([FromBody]string codePiece)=>
+        public dynamic DynamicQuery([FromBody]string codePiece)=>
             _dynamicQueryService.DynamicQuery(codePiece);
 
         [HttpGet("ExcelInterop")]
