@@ -9,6 +9,8 @@ using System.Reflection;
 using System.Runtime.Loader;
 using System.Threading.Tasks;
 using LabCMS.EquipmentDomain.Server.Services;
+using System.IO;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace LabCMS.EquipmentDomain.Server.Controllers
 {
@@ -18,13 +20,16 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
     {
         private readonly UsageRecordsRepository  _usageRecordsRepository;
         private readonly DynamicQueryService _dynamicQueryService;
+        private readonly ExcelExportService _excelExportService;
         public UsageRecordsController(
             UsageRecordsRepository  usageRecordsRepository,
-            DynamicQueryService dynamicQueryService
+            DynamicQueryService dynamicQueryService,
+            ExcelExportService excelExportService
             )
         { 
             _usageRecordsRepository = usageRecordsRepository;
             _dynamicQueryService = dynamicQueryService;
+            _excelExportService = excelExportService;
         }
 
         [HttpGet]
@@ -56,7 +61,15 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         }
 
         [HttpPost("DynamicQuery")]
-        public IEnumerable<dynamic> DynamicQuery(string codePiece)=>
+        public IEnumerable<dynamic> DynamicQuery([FromBody]string codePiece)=>
             _dynamicQueryService.DynamicQuery(codePiece);
+
+        [HttpGet("ExcelInterop")]
+        public dynamic ExportToExcelAsync()
+        {
+            Stream stream = _excelExportService.Export(
+                _usageRecordsRepository.UsageRecords.AsNoTracking());
+            return this.File(stream, "text/plain", "EquipmentUsageRecord.xlsx");
+        }
     }
 }

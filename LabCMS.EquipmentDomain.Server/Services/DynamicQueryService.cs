@@ -60,13 +60,11 @@ namespace LabCMS.EquipmentDomain.Temp_{assemblyId}
     }}
 }}
 ";
-        int assemblyCount = AssemblyLoadContext.Default.Assemblies.Count();
         Assembly tempAssembly = Compile($"AssemblyTemp{assemblyId}",code,
             AssemblyLoadContext.Default.Assemblies.Where(assembly=>!assembly.IsDynamic).ToArray());
         Type instanceType = tempAssembly.GetType($"LabCMS.EquipmentDomain.Temp_{assemblyId}.DynamicQuereInstance")!;
         dynamic instance = Activator.CreateInstance(instanceType)!;
         dynamic result = instance.DynamicQuery(_usageRecordsRepository.UsageRecords.AsNoTracking());
-        int assemblyCount2 = AssemblyLoadContext.Default.Assemblies.Count();
         return result;
     }
     }

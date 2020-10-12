@@ -14,6 +14,8 @@ using LabCMS.Gateway.Shared.Extensions;
 using LabCMS.EquipmentDomain.Server.Repositories;
 using Microsoft.EntityFrameworkCore;
 using LabCMS.EquipmentDomain.Server.Services;
+using LabCMS.ProjectDomain.Shared.Services;
+using LabCMS.EquipmentDomain.Shared.Services;
 
 namespace LabCMS.EquipmentDomain.Server
 {
@@ -31,7 +33,10 @@ namespace LabCMS.EquipmentDomain.Server
         {
             services.AddControllers().AddJsonOptions(options=>
                 options.JsonSerializerOptions.PropertyNamingPolicy=null);
-                services.AddTransient<DynamicQueryService>();
+            services.AddSingleton<ProjectsWebCacheService>();
+            services.AddSingleton<EquipmentHourlyRatesLocalCacheService>();
+            services.AddTransient<DynamicQueryService>();
+            services.AddTransient<ExcelExportService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LabCMS.EquipmentDomain.Server", Version = "v1" });

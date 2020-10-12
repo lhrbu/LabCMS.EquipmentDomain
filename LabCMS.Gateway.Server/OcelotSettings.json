@@ -58,14 +58,14 @@
         "DownstreamScheme": "http"
       },
       {
-        "UpStreamPathTemplate": "/api/UsageRecords/{id}",
+        "UpStreamPathTemplate": "/api/UsageRecords/{others}",
         "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
 
         "ServiceName": "EquipmentDomain",
         "LoadBalancerOptions": {
           "Type": "LeastConnection"
         },
-        "DownstreamPathTemplate": "/api/UsageRecords/{id}",
+        "DownstreamPathTemplate": "/api/UsageRecords/{others}",
         "DownstreamScheme": "http"
       }
     ],
