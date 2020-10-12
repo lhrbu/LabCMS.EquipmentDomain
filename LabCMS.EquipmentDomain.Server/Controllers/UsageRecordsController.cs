@@ -5,7 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Loader;
 using System.Threading.Tasks;
+using LabCMS.EquipmentDomain.Server.Services;
 
 namespace LabCMS.EquipmentDomain.Server.Controllers
 {
@@ -14,11 +17,14 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
     public class UsageRecordsController : ControllerBase
     {
         private readonly UsageRecordsRepository  _usageRecordsRepository;
+        private readonly DynamicQueryService _dynamicQueryService;
         public UsageRecordsController(
-            UsageRecordsRepository  usageRecordsRepository
+            UsageRecordsRepository  usageRecordsRepository,
+            DynamicQueryService dynamicQueryService
             )
         { 
             _usageRecordsRepository = usageRecordsRepository;
+            _dynamicQueryService = dynamicQueryService;
         }
 
         [HttpGet]
@@ -48,5 +54,9 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
                 await _usageRecordsRepository.SaveChangesAsync();
             }
         }
+
+        [HttpPost("DynamicQuery")]
+        public IEnumerable<dynamic> DynamicQuery(string codePiece)=>
+            _dynamicQueryService.DynamicQuery(codePiece);
     }
 }
