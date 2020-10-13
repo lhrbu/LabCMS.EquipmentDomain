@@ -43,13 +43,14 @@ namespace LabCMS.EquipmentDomain.Server
 
         private static async Task InitializeCache(IHost host)
         {
-            ProjectsWebCacheService projectsWebCacheService = host.Services
-                .GetRequiredService<ProjectsWebCacheService>();
-            Task task = projectsWebCacheService.RefreshCacheAsync();
-            EquipmentHourlyRatesLocalCacheService equipmentHourlyRatesLocalCacheService = host.Services
-                .GetRequiredService<EquipmentHourlyRatesLocalCacheService>();
-            equipmentHourlyRatesLocalCacheService.RefreshCache();
-            await task;
+            //ProjectsWebCacheService projectsWebCacheService = host.Services
+            //    .GetRequiredService<ProjectsWebCacheService>();
+            //Task task = projectsWebCacheService.RefreshCacheAsync();
+            //EquipmentHourlyRatesLocalCacheService equipmentHourlyRatesLocalCacheService = host.Services
+            //    .GetRequiredService<EquipmentHourlyRatesLocalCacheService>();
+            //equipmentHourlyRatesLocalCacheService.RefreshCache();
+            //await task;
+            await host.Services.GetRequiredService<ReloadCacheService>().ReloadCacheAsync();
         }
         static void TestDynamicQueryService(string[] args)
         {

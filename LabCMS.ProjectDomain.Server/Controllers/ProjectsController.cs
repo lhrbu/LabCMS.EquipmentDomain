@@ -21,5 +21,12 @@ namespace LabCMS.ProjectDomain.Server.Controllers
 
         [HttpGet]
         public IAsyncEnumerable<Project> GetAsync() => _repository.Projects.AsNoTracking().AsAsyncEnumerable();
+    
+        [HttpPost]
+        public async ValueTask PostAsync(Project project)
+        {
+            _repository.Projects.Add(project);
+            await _repository.SaveChangesAsync();
+        }
     }
 }

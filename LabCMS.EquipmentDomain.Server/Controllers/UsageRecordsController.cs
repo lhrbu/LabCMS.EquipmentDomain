@@ -12,6 +12,7 @@ using LabCMS.EquipmentDomain.Server.Services;
 using System.IO;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Text.Json;
+using LabCMS.ProjectDomain.Shared.Services;
 
 namespace LabCMS.EquipmentDomain.Server.Controllers
 {
@@ -22,15 +23,21 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         private readonly UsageRecordsRepository  _usageRecordsRepository;
         private readonly DynamicQueryService _dynamicQueryService;
         private readonly ExcelExportService _excelExportService;
+        private readonly ProjectsWebCacheService _projectsWebCacheService;
+        private readonly EquipmentHourlyRatesLocalCacheService _equipmentHourlyRatesLocalCacheService;
         public UsageRecordsController(
             UsageRecordsRepository  usageRecordsRepository,
             DynamicQueryService dynamicQueryService,
-            ExcelExportService excelExportService
+            ExcelExportService excelExportService,
+            ProjectsWebCacheService projectsWebCacheService,
+            EquipmentHourlyRatesLocalCacheService equipmentHourlyRatesLocalCacheService
             )
         { 
             _usageRecordsRepository = usageRecordsRepository;
             _dynamicQueryService = dynamicQueryService;
             _excelExportService = excelExportService;
+            _projectsWebCacheService = projectsWebCacheService;
+            _equipmentHourlyRatesLocalCacheService = equipmentHourlyRatesLocalCacheService;
         }
 
         [HttpGet]
@@ -38,17 +45,27 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
             _usageRecordsRepository.UsageRecords.AsNoTracking().AsAsyncEnumerable();
 
         [HttpPost]
-        public async ValueTask PostAsync(UsageRecord usageRecord)
+        public async ValueTask<ActionResult> PostAsync(UsageRecord usageRecord)
         {
-            await _usageRecordsRepository.UsageRecords.AddAsync(usageRecord);
-            await _usageRecordsRepository.SaveChangesAsync();
+            if (Validate(usageRecord))
+            {
+                await _usageRecordsRepository.UsageRecords.AddAsync(usageRecord);
+                await _usageRecordsRepository.SaveChangesAsync();
+                return Ok();
+            }
+            else { return BadRequest("Invalid usage record was posted"); }
         }
 
         [HttpPut]
-        public async ValueTask PutAsync(UsageRecord usageRecord)
+        public async ValueTask<ActionResult> PutAsync(UsageRecord usageRecord)
         {
-            _usageRecordsRepository.UsageRecords.Update(usageRecord);
-            await _usageRecordsRepository.SaveChangesAsync();
+            if (Validate(usageRecord))
+            {
+                _usageRecordsRepository.UsageRecords.Update(usageRecord);
+                await _usageRecordsRepository.SaveChangesAsync();
+                return Ok();
+            }
+            else { return BadRequest("Invalid usage record was put"); }
         }
         [HttpDelete("{id}")]
         public async ValueTask DeleteByIdAsync(Guid id)
@@ -81,5 +98,10 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
             await _usageRecordsRepository.UsageRecords.AddRangeAsync(usageRecords);
             await _usageRecordsRepository.SaveChangesAsync();
         }
+
+        private bool Validate(UsageRecord usageRecord)=>
+            _projectsWebCacheService.CachedProjects.Any(item => item.FullName == usageRecord.ProjectName) &&
+            _equipmentHourlyRatesLocalCacheService.CachedEquipmentHourlyRates.Any(item => item.EquipmentNo == usageRecord.EquipmentNo);
+        
     }
 }

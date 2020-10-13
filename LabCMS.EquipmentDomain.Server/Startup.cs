@@ -35,6 +35,7 @@ namespace LabCMS.EquipmentDomain.Server
                 options.JsonSerializerOptions.PropertyNamingPolicy=null);
             services.AddSingleton<ProjectsWebCacheService>();
             services.AddSingleton<EquipmentHourlyRatesLocalCacheService>();
+            services.AddTransient<ReloadCacheService>();
             services.AddTransient<DynamicQueryService>();
             services.AddTransient<ExcelExportService>();
             services.AddSwaggerGen(c =>
