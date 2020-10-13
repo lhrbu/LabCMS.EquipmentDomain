@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using LabCMS.EquipmentDomain.Server.Services;
 using System.IO;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Text.Json;
 
 namespace LabCMS.EquipmentDomain.Server.Controllers
 {
@@ -70,6 +71,15 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
             Stream stream = _excelExportService.Export(
                 _usageRecordsRepository.UsageRecords.AsNoTracking());
             return this.File(stream, "text/plain", "EquipmentUsageRecord.xlsx");
+        }
+
+        [HttpGet("LoadSeedData")]
+        public async ValueTask LoadSeedData()
+        {
+            using Stream stream=System.IO.File.OpenRead("OutputUsageRecords.json");
+            UsageRecord[] usageRecords = (await JsonSerializer.DeserializeAsync<UsageRecord[]>(stream))!;
+            await _usageRecordsRepository.UsageRecords.AddRangeAsync(usageRecords);
+            await _usageRecordsRepository.SaveChangesAsync();
         }
     }
 }
