@@ -21,12 +21,14 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
     public class UsageRecordsController : ControllerBase
     {
         private readonly UsageRecordsRepository  _usageRecordsRepository;
+        private readonly UsageRecordsRecycleBin _usageRecordsRecycleBin;
         private readonly DynamicQueryService _dynamicQueryService;
         private readonly ExcelExportService _excelExportService;
         private readonly ProjectsWebCacheService _projectsWebCacheService;
         private readonly EquipmentHourlyRatesLocalCacheService _equipmentHourlyRatesLocalCacheService;
         public UsageRecordsController(
             UsageRecordsRepository  usageRecordsRepository,
+            UsageRecordsRecycleBin usageRecordsRecycleBin,
             DynamicQueryService dynamicQueryService,
             ExcelExportService excelExportService,
             ProjectsWebCacheService projectsWebCacheService,
@@ -74,6 +76,23 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
             if(usageRecord!=null)
             {
                 _usageRecordsRepository.UsageRecords.Remove(usageRecord);
+                await _usageRecordsRecycleBin.UsageRecords.AddAsync(usageRecord);
+                
+                await _usageRecordsRecycleBin.SaveChangesAsync();
+                await _usageRecordsRepository.SaveChangesAsync();
+            }
+        }
+        
+        [HttpPost("Restore/{id}")]
+        public async ValueTask RestoreById(Guid id)
+        {
+            UsageRecord? usageRecord = await _usageRecordsRecycleBin.UsageRecords.FindAsync(id);
+            if(usageRecord is not null)
+            {
+                _usageRecordsRecycleBin.UsageRecords.Remove(usageRecord);
+                await _usageRecordsRepository.UsageRecords.AddAsync(usageRecord);
+
+                await _usageRecordsRecycleBin.SaveChangesAsync();
                 await _usageRecordsRepository.SaveChangesAsync();
             }
         }
