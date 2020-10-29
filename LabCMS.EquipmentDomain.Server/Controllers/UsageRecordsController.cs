@@ -36,6 +36,7 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
             )
         { 
             _usageRecordsRepository = usageRecordsRepository;
+            _usageRecordsRecycleBin = usageRecordsRecycleBin;
             _dynamicQueryService = dynamicQueryService;
             _excelExportService = excelExportService;
             _projectsWebCacheService = projectsWebCacheService;
