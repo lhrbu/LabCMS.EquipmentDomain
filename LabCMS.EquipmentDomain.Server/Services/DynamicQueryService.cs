@@ -66,6 +66,7 @@ namespace LabCMS.EquipmentDomain.Temp_{assemblyId}
         dynamic instance = Activator.CreateInstance(instanceType)!;
         dynamic result = instance.DynamicQuery(_usageRecordsRepository.UsageRecords.AsNoTracking());
         return result;
-    }
+
+        }
     }
 }

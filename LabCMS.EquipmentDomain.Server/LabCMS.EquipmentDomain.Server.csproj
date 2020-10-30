@@ -7,15 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="EquipmentHourlyRate.db" />
-    <None Remove="UsageRecords.db" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="EquipmentHourlyRate.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UsageRecords.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+     <Content Include="UsageRecordsRecycleBin.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

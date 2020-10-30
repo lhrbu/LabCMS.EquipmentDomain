@@ -13,7 +13,7 @@ namespace LabCMS.EquipmentDomain.Server.Repositories
         public UsageRecordsRecycleBin(DbContextOptions<UsageRecordsRecycleBin> options)
             : base(options) { }
 
-        public DbSet<UsageRecord> UsageRecords { get; set; } = null!;
+        public DbSet<UsageRecord> SoftDeletedUsageRecords { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UsageRecord>()

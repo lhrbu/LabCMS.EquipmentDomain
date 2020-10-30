@@ -77,7 +77,7 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
             if(usageRecord!=null)
             {
                 _usageRecordsRepository.UsageRecords.Remove(usageRecord);
-                await _usageRecordsRecycleBin.UsageRecords.AddAsync(usageRecord);
+                await _usageRecordsRecycleBin.SoftDeletedUsageRecords.AddAsync(usageRecord);
                 
                 await _usageRecordsRecycleBin.SaveChangesAsync();
                 await _usageRecordsRepository.SaveChangesAsync();
@@ -87,10 +87,10 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         [HttpPost("Restore/{id}")]
         public async ValueTask RestoreById(Guid id)
         {
-            UsageRecord? usageRecord = await _usageRecordsRecycleBin.UsageRecords.FindAsync(id);
+            UsageRecord? usageRecord = await _usageRecordsRecycleBin.SoftDeletedUsageRecords.FindAsync(id);
             if(usageRecord is not null)
             {
-                _usageRecordsRecycleBin.UsageRecords.Remove(usageRecord);
+                _usageRecordsRecycleBin.SoftDeletedUsageRecords.Remove(usageRecord);
                 await _usageRecordsRepository.UsageRecords.AddAsync(usageRecord);
 
                 await _usageRecordsRecycleBin.SaveChangesAsync();
