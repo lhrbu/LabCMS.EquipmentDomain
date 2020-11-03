@@ -20,5 +20,19 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         [HttpGet]
         public IAsyncEnumerable<EquipmentHourlyRate> GetAsync() =>
             _repository.EquipmentHourlyRates.AsNoTracking().AsAsyncEnumerable();
+        
+        [HttpPost]
+        public async ValueTask PostAsync(EquipmentHourlyRate equipmentHourlyRate)
+        {
+            await _repository.EquipmentHourlyRates.AddAsync(equipmentHourlyRate);
+            await _repository.SaveChangesAsync();
+        }
+
+        [HttpPut]
+        public async ValueTask PutAsync(EquipmentHourlyRate equipmentHourlyRate)
+        {
+            _repository.EquipmentHourlyRates.Update(equipmentHourlyRate);
+            await _repository.SaveChangesAsync();
+        }
     }
 }

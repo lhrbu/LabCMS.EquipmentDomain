@@ -67,6 +67,17 @@
         },
         "DownstreamPathTemplate": "/api/UsageRecords/{others}",
         "DownstreamScheme": "http"
+      },
+      {
+        "UpStreamPathTemplate": "/api/ReloadCache",
+        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+
+        "ServiceName": "EquipmentDomain",
+        "LoadBalancerOptions": {
+          "Type": "LeastConnection"
+        },
+        "DownstreamPathTemplate": "/api/ReloadCache",
+        "DownstreamScheme": "http"
       }
     ],
   

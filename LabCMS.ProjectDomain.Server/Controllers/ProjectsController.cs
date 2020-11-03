@@ -25,7 +25,13 @@ namespace LabCMS.ProjectDomain.Server.Controllers
         [HttpPost]
         public async ValueTask PostAsync(Project project)
         {
-            _repository.Projects.Add(project);
+            await _repository.Projects.AddAsync(project);
+            await _repository.SaveChangesAsync();
+        }
+
+        public async ValueTask PutAsync(Project project)
+        {
+            _repository.Projects.Update(project);
             await _repository.SaveChangesAsync();
         }
     }
