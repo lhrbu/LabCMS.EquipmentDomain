@@ -10,7 +10,18 @@
         "DownstreamPathTemplate": "/api/Projects", 
         "DownstreamScheme": "http"
       },
-  
+
+      {
+        "UpStreamPathTemplate": "/api/Projects/{others}", 
+        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], 
+        "ServiceName": "ProjectDomain",
+        "LoadBalancerOptions": {
+          "Type": "LeastConnection"
+        },
+        "DownstreamPathTemplate": "/api/Projects/{others}", 
+        "DownstreamScheme": "http"
+      },
+      
       {
         "UpStreamPathTemplate": "/api/Fixtures",
         "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
@@ -44,6 +55,17 @@
           "Type": "LeastConnection"
         },
         "DownstreamPathTemplate": "/api/EquipmentHourlyRates",
+        "DownstreamScheme": "http"
+      },
+      {
+        "UpStreamPathTemplate": "/api/EquipmentHourlyRates/{others}",
+        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+  
+        "ServiceName": "EquipmentDomain",
+        "LoadBalancerOptions": {
+          "Type": "LeastConnection"
+        },
+        "DownstreamPathTemplate": "/api/EquipmentHourlyRates/{others}",
         "DownstreamScheme": "http"
       },
       {

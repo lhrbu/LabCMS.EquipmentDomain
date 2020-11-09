@@ -14,9 +14,19 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
     [ApiController]
     public class EquipmentHourlyRatesController : ControllerBase
     {
+        private readonly UsageRecordsRepository _usageRecordsRepository;
+        private readonly UsageRecordsRecycleBin _usageRecordsRecyclBin;
         private readonly EquipmentHourlyRatesRepository  _repository;
-        public EquipmentHourlyRatesController(EquipmentHourlyRatesRepository repository)
-        { _repository = repository; }
+        public EquipmentHourlyRatesController(
+            EquipmentHourlyRatesRepository repository,
+            UsageRecordsRepository usageRecordsRepository,
+            UsageRecordsRecycleBin usageRecordsRecycleBin
+            )
+        { 
+            _repository = repository;
+            _usageRecordsRepository = usageRecordsRepository;
+            _usageRecordsRecyclBin = usageRecordsRecycleBin;
+        }
         [HttpGet]
         public IAsyncEnumerable<EquipmentHourlyRate> GetAsync() =>
             _repository.EquipmentHourlyRates.AsNoTracking().AsAsyncEnumerable();
@@ -33,6 +43,24 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         {
             _repository.EquipmentHourlyRates.Update(equipmentHourlyRate);
             await _repository.SaveChangesAsync();
+        }
+
+        [HttpDelete("{equipmentNo}")]
+        public async ValueTask<ActionResult> DeleteAsync(string equipmentNo)
+        {
+            if(_usageRecordsRepository.UsageRecords.Any(item=>item.EquipmentNo == equipmentNo) || 
+                    _usageRecordsRecyclBin.SoftDeletedUsageRecords.Any(item=>item.EquipmentNo==equipmentNo))
+            { return BadRequest();}
+            else{
+               EquipmentHourlyRate? equipmentHourlyRate =await _repository.EquipmentHourlyRates.FindAsync(equipmentNo);
+               if(equipmentHourlyRate is not null)
+               {
+                   _repository.EquipmentHourlyRates.Remove(equipmentHourlyRate);
+                   await _repository.SaveChangesAsync();
+                   return Ok();
+               }else{ return BadRequest();}
+            }
+                    
         }
     }
 }
