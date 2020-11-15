@@ -10,6 +10,9 @@ using System.Runtime.Loader;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using LabCMS.EquipmentDomain.Server.Repositories;
+using Microsoft.ClearScript;
+using Microsoft.ClearScript.JavaScript;
+using Microsoft.ClearScript.V8;
 
 namespace LabCMS.EquipmentDomain.Server.Services
 {
@@ -17,7 +20,10 @@ namespace LabCMS.EquipmentDomain.Server.Services
     {
         private readonly UsageRecordsRepository  _usageRecordsRepository;
         public DynamicQueryService(UsageRecordsRepository usageRecordsRepository)
-        { _usageRecordsRepository=usageRecordsRepository;}
+        { 
+            _usageRecordsRepository=usageRecordsRepository;
+            _jsEngine.AddHostObject("lib", new HostTypeCollection("mscorlib", "System.Core"));
+        }
 
         private readonly CSharpCompilationOptions _compilationOptions = new(
             outputKind:OutputKind.DynamicallyLinkedLibrary,
@@ -67,6 +73,20 @@ namespace LabCMS.EquipmentDomain.Temp_{assemblyId}
         dynamic result = instance.DynamicQuery(_usageRecordsRepository.UsageRecords.AsNoTracking());
         return result;
 
+        }
+        private readonly V8ScriptEngine _jsEngine = new();
+        public dynamic DynamicQueryByV8(string codePiece)
+        {
+            IEnumerable<UsageRecord> usageRecords = _usageRecordsRepository.UsageRecords.AsNoTracking();
+            _jsEngine.AddHostObject(nameof(usageRecords), usageRecords);
+            string wrappedCode = @$"
+                function queryFunc(){{
+                    {codePiece}
+                }}
+                var result = queryFunc();
+                result;
+            ";
+            return _jsEngine.Evaluate(wrappedCode);
         }
     }
 }

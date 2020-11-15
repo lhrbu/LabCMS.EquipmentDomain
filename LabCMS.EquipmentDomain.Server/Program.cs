@@ -25,6 +25,7 @@ namespace LabCMS.EquipmentDomain.Server
     {
         public static async Task Main(string[] args)
         {
+            TestDynamicQueryService(args);
             RegisterSyncfusion();
             //TestSyncfusionXoi();
             IHost host = CreateHostBuilder(args).Build();
@@ -58,7 +59,7 @@ namespace LabCMS.EquipmentDomain.Server
             using var scope = host.Services.CreateScope();
             var service= scope.ServiceProvider.GetRequiredService<DynamicQueryService>();
             Guid assemblyId =Guid.NewGuid();
-            var result = service.DynamicQuery("return new[]{1,2,3,4,5};");
+            var result = service.DynamicQueryByV8("return usageRecords.Count");
             Type type = result.GetType();
         }
 
