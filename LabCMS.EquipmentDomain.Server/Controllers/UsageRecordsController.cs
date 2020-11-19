@@ -26,13 +26,16 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         private readonly ExcelExportService _excelExportService;
         private readonly ProjectsWebCacheService _projectsWebCacheService;
         private readonly EquipmentHourlyRatesLocalCacheService _equipmentHourlyRatesLocalCacheService;
+        private readonly ElasticSearchInteropService _elasticSearch;
+        
         public UsageRecordsController(
             UsageRecordsRepository  usageRecordsRepository,
             UsageRecordsRecycleBin usageRecordsRecycleBin,
             DynamicQueryService dynamicQueryService,
             ExcelExportService excelExportService,
             ProjectsWebCacheService projectsWebCacheService,
-            EquipmentHourlyRatesLocalCacheService equipmentHourlyRatesLocalCacheService
+            EquipmentHourlyRatesLocalCacheService equipmentHourlyRatesLocalCacheService,
+            ElasticSearchInteropService elasticSearch
             )
         { 
             _usageRecordsRepository = usageRecordsRepository;
@@ -41,6 +44,8 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
             _excelExportService = excelExportService;
             _projectsWebCacheService = projectsWebCacheService;
             _equipmentHourlyRatesLocalCacheService = equipmentHourlyRatesLocalCacheService;
+
+            _elasticSearch = elasticSearch;
         }
 
         [HttpGet]
@@ -52,6 +57,7 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         {
             if (Validate(usageRecord))
             {
+                _=_elasticSearch.IndexAsync(usageRecord).ConfigureAwait(false);
                 await _usageRecordsRepository.UsageRecords.AddAsync(usageRecord);
                 await _usageRecordsRepository.SaveChangesAsync();
                 return Ok();
@@ -64,6 +70,7 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         {
             if (Validate(usageRecord))
             {
+                _ = _elasticSearch.IndexAsync(usageRecord).ConfigureAwait(false);
                 _usageRecordsRepository.UsageRecords.Update(usageRecord);
                 await _usageRecordsRepository.SaveChangesAsync();
                 return Ok();
@@ -76,6 +83,7 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
             UsageRecord? usageRecord = await _usageRecordsRepository.UsageRecords.FindAsync(id);
             if(usageRecord!=null)
             {
+                _=_elasticSearch.RemoveByIdAsync(id).ConfigureAwait(false);
                 _usageRecordsRepository.UsageRecords.Remove(usageRecord);
                 await _usageRecordsRecycleBin.SoftDeletedUsageRecords.AddAsync(usageRecord);
                 

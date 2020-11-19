@@ -48,6 +48,7 @@ namespace LabCMS.EquipmentDomain.Server
                 options.UseSqlite(Configuration.GetConnectionString(nameof(UsageRecordsRepository ))));
             services.AddDbContext<UsageRecordsRecycleBin>(options =>
                 options.UseSqlite(Configuration.GetConnectionString(nameof(UsageRecordsRecycleBin))));
+            services.AddSingleton<ElasticSearchInteropService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

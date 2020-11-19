@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30509.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabCMS.FixtureDomain.Shared", "LabCMS.FixtureDomain.Shared\LabCMS.FixtureDomain.Shared.csproj", "{386B22C1-608E-42E6-B6FF-D6684A63E84C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabCMS.ProjectDomain.Shared", "LabCMS.ProjectDomain.Shared\LabCMS.ProjectDomain.Shared.csproj", "{1064C023-8650-44D0-8405-FC7535AA81E6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabCMS.ProjectDomain.Server", "LabCMS.ProjectDomain.Server\LabCMS.ProjectDomain.Server.csproj", "{23DACDE2-9FB8-414D-90E5-483DBC765668}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabCMS.FixtureDomain.Server", "LabCMS.FixtureDomain.Server\LabCMS.FixtureDomain.Server.csproj", "{C14A4192-91C2-4D00-AFDD-2135473D3982}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabCMS.Shared", "LabCMS.Shared\LabCMS.Shared.csproj", "{696DE1D7-6737-4408-A52C-1ED57EF7BA29}"
 EndProject
@@ -21,9 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabCMS.EquipmentDomain.Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabCMS.Gateway.Server", "LabCMS.Gateway.Server\LabCMS.Gateway.Server.csproj", "{67EDB19E-CBC1-4A78-B7AF-6F4D1C6A97CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabCMS.DebugConsole", "LabCMS.DebugConsole\LabCMS.DebugConsole.csproj", "{5B9E12F1-D052-4AAA-B89D-FB805F3BAF82}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabCMS.Tools.MigrationHelper", "LabCMS.Tools.MigrationHelper\LabCMS.Tools.MigrationHelper.csproj", "{F98A0CD9-E8C4-49E6-9558-4A1EB6A8BA7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabCMS.Tools.MigrationHelper", "LabCMS.Tools.MigrationHelper\LabCMS.Tools.MigrationHelper.csproj", "{F98A0CD9-E8C4-49E6-9558-4A1EB6A8BA7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +25,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{386B22C1-608E-42E6-B6FF-D6684A63E84C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{386B22C1-608E-42E6-B6FF-D6684A63E84C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{386B22C1-608E-42E6-B6FF-D6684A63E84C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{386B22C1-608E-42E6-B6FF-D6684A63E84C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1064C023-8650-44D0-8405-FC7535AA81E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1064C023-8650-44D0-8405-FC7535AA81E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1064C023-8650-44D0-8405-FC7535AA81E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,10 +33,6 @@ Global
 		{23DACDE2-9FB8-414D-90E5-483DBC765668}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23DACDE2-9FB8-414D-90E5-483DBC765668}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23DACDE2-9FB8-414D-90E5-483DBC765668}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C14A4192-91C2-4D00-AFDD-2135473D3982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C14A4192-91C2-4D00-AFDD-2135473D3982}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C14A4192-91C2-4D00-AFDD-2135473D3982}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C14A4192-91C2-4D00-AFDD-2135473D3982}.Release|Any CPU.Build.0 = Release|Any CPU
 		{696DE1D7-6737-4408-A52C-1ED57EF7BA29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{696DE1D7-6737-4408-A52C-1ED57EF7BA29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{696DE1D7-6737-4408-A52C-1ED57EF7BA29}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,10 +53,6 @@ Global
 		{67EDB19E-CBC1-4A78-B7AF-6F4D1C6A97CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67EDB19E-CBC1-4A78-B7AF-6F4D1C6A97CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67EDB19E-CBC1-4A78-B7AF-6F4D1C6A97CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B9E12F1-D052-4AAA-B89D-FB805F3BAF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B9E12F1-D052-4AAA-B89D-FB805F3BAF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B9E12F1-D052-4AAA-B89D-FB805F3BAF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B9E12F1-D052-4AAA-B89D-FB805F3BAF82}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F98A0CD9-E8C4-49E6-9558-4A1EB6A8BA7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F98A0CD9-E8C4-49E6-9558-4A1EB6A8BA7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F98A0CD9-E8C4-49E6-9558-4A1EB6A8BA7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
