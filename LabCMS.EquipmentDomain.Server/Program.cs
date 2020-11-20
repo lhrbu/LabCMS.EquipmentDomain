@@ -25,7 +25,7 @@ namespace LabCMS.EquipmentDomain.Server
     {
         public static async Task Main(string[] args)
         {
-            TestDynamicQueryService(args);
+            //TestDynamicQueryService(args);
             RegisterSyncfusion();
             //TestSyncfusionXoi();
             IHost host = CreateHostBuilder(args).Build();

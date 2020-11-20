@@ -26,7 +26,7 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         private readonly ExcelExportService _excelExportService;
         private readonly ProjectsWebCacheService _projectsWebCacheService;
         private readonly EquipmentHourlyRatesLocalCacheService _equipmentHourlyRatesLocalCacheService;
-        private readonly ElasticSearchInteropService _elasticSearch;
+        private readonly ElasticSearchInteropService _elasticSearch = null!;
         
         public UsageRecordsController(
             UsageRecordsRepository  usageRecordsRepository,
@@ -57,9 +57,13 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         {
             if (Validate(usageRecord))
             {
-                _=_elasticSearch.IndexAsync(usageRecord).ConfigureAwait(false);
+                
                 await _usageRecordsRepository.UsageRecords.AddAsync(usageRecord);
+
+                // usageRecord doesn't get its id until AddAsync method, this line can't appear before!
+                _=_elasticSearch.IndexAsync(usageRecord).ConfigureAwait(false);
                 await _usageRecordsRepository.SaveChangesAsync();
+                
                 return Ok();
             }
             else { return BadRequest("Invalid usage record was posted"); }
@@ -109,6 +113,8 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         [HttpPost("DynamicQuery")]
         public dynamic DynamicQuery([FromBody]string codePiece)=>
             _dynamicQueryService.DynamicQuery(codePiece);
+        // public dynamic DynamiceQuery([FromBody]string codePiece)=>
+        //     _dynamicQueryService.DynamicQueryByV8(codePiece);
 
         [HttpGet("ExcelInterop")]
         public dynamic ExportToExcelAsync()

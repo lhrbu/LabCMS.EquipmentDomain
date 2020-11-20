@@ -22,7 +22,12 @@ namespace LabCMS.EquipmentDomain.Server.Services
         public DynamicQueryService(UsageRecordsRepository usageRecordsRepository)
         { 
             _usageRecordsRepository=usageRecordsRepository;
-            _jsEngine.AddHostObject("lib", new HostTypeCollection("mscorlib", "System.Core"));
+            _jsEngine.AddHostType("Console", typeof(Console));
+            _jsEngine.AddHostType(typeof(Enumerable));
+            _jsEngine.AddHostType(typeof(UsageRecord));
+            _jsEngine.AddHostObject("lib", new HostTypeCollection("mscorlib", "System.Core"
+                ,"System.Collections","System.Runtime"));
+            
         }
 
         private readonly CSharpCompilationOptions _compilationOptions = new(
@@ -77,14 +82,13 @@ namespace LabCMS.EquipmentDomain.Temp_{assemblyId}
         private readonly V8ScriptEngine _jsEngine = new();
         public dynamic DynamicQueryByV8(string codePiece)
         {
-            IEnumerable<UsageRecord> usageRecords = _usageRecordsRepository.UsageRecords.AsNoTracking();
+            IEnumerable<UsageRecord> usageRecords = _usageRecordsRepository.UsageRecords.AsNoTracking().ToList();
             _jsEngine.AddHostObject(nameof(usageRecords), usageRecords);
             string wrappedCode = @$"
                 function queryFunc(){{
                     {codePiece}
                 }}
-                var result = queryFunc();
-                result;
+                queryFunc();
             ";
             return _jsEngine.Evaluate(wrappedCode);
         }

@@ -100,6 +100,17 @@
         },
         "DownstreamPathTemplate": "/api/ReloadCache",
         "DownstreamScheme": "http"
+      },
+      {
+        "UpStreamPathTemplate": "/api/ElasticSearch",
+        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+
+        "ServiceName": "EquipmentDomain",
+        "LoadBalancerOptions": {
+          "Type": "LeastConnection"
+        },
+        "DownstreamPathTemplate": "/api/ElasticSearch",
+        "DownstreamScheme": "http"
       }
     ],
   

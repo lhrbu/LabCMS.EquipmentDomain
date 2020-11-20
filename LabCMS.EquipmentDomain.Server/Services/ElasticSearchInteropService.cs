@@ -32,16 +32,21 @@ namespace LabCMS.EquipmentDomain.Server.Services
             return false;
         }
 
-        public async ValueTask IndexAsync(UsageRecord usageRecord) =>
+        public async ValueTask IndexAsync(UsageRecord usageRecord)=>
             await _elasticClient.IndexAsync(usageRecord, item => item.Index(IndexName));
+        
         public async ValueTask IndexManyAsync(IEnumerable<UsageRecord> usageRecords) =>
             await _elasticClient.IndexManyAsync(usageRecords, IndexName);
 
-        public async ValueTask<IEnumerable<UsageRecord>> SearchAllAsync() =>
-            (await _elasticClient.SearchAsync<UsageRecord>(s => s.MatchAll())).Documents;
+        public async ValueTask<IEnumerable<UsageRecord>> SearchAllAsync()
+        {
+            long size = (await _elasticClient.CountAsync<UsageRecord>(q=>q.Index(IndexName))).Count;
+            return (await _elasticClient.SearchAsync<UsageRecord>(s => s.Index(IndexName).MatchAll().Size((int)size))).Documents;
+        }
 
-        public async ValueTask RemoveByIdAsync(Guid id) =>
-            await _elasticClient.DeleteAsync<UsageRecord>(id);
+        public async ValueTask RemoveByIdAsync(Guid id) {
+            var res =await _elasticClient.DeleteAsync<UsageRecord>(id,item=>item.Index(IndexName));
+        }
 
         public async ValueTask RemoveManyAsync(IEnumerable<UsageRecord> usageRecords) =>
             await _elasticClient.DeleteManyAsync(usageRecords, IndexName);

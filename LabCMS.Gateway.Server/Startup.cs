@@ -40,8 +40,10 @@ namespace LabCMS.Gateway.Server
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRemoteIPAddressProviderForSerilog();
+            ICollection<string> ipAddresses = app.ServerFeatures.Get<IServerAddressesFeature>().Addresses;
+            Console.WriteLine($"ASP NET Core now Listenning on: {ipAddresses.First()}");
             Log.Logger.Information("ASP NET Core now Listenning on: {Address}"
-                ,app.ServerFeatures.Get<IServerAddressesFeature>().Addresses);
+                ,ipAddresses);
             app.UseSerilogRequestLogging();
             app.UseRouting();
             app.UseOcelot();
