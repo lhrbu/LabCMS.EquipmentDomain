@@ -10,9 +10,9 @@ using System.Runtime.Loader;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using LabCMS.EquipmentDomain.Server.Repositories;
-using Microsoft.ClearScript;
-using Microsoft.ClearScript.JavaScript;
-using Microsoft.ClearScript.V8;
+//using Microsoft.ClearScript;
+//using Microsoft.ClearScript.JavaScript;
+//using Microsoft.ClearScript.V8;
 
 namespace LabCMS.EquipmentDomain.Server.Services
 {
@@ -22,11 +22,11 @@ namespace LabCMS.EquipmentDomain.Server.Services
         public DynamicQueryService(UsageRecordsRepository usageRecordsRepository)
         { 
             _usageRecordsRepository=usageRecordsRepository;
-            _jsEngine.AddHostType("Console", typeof(Console));
-            _jsEngine.AddHostType(typeof(Enumerable));
-            _jsEngine.AddHostType(typeof(UsageRecord));
-            _jsEngine.AddHostObject("lib", new HostTypeCollection("mscorlib", "System.Core"
-                ,"System.Collections","System.Runtime"));
+            //_jsEngine.AddHostType("Console", typeof(Console));
+            //_jsEngine.AddHostType(typeof(Enumerable));
+            //_jsEngine.AddHostType(typeof(UsageRecord));
+            //_jsEngine.AddHostObject("lib", new HostTypeCollection("mscorlib", "System.Core"
+            //    ,"System.Collections","System.Runtime"));
             
         }
 
@@ -79,18 +79,18 @@ namespace LabCMS.EquipmentDomain.Temp_{assemblyId}
         return result;
 
         }
-        private readonly V8ScriptEngine _jsEngine = new();
-        public dynamic DynamicQueryByV8(string codePiece)
-        {
-            IEnumerable<UsageRecord> usageRecords = _usageRecordsRepository.UsageRecords.AsNoTracking().ToList();
-            _jsEngine.AddHostObject(nameof(usageRecords), usageRecords);
-            string wrappedCode = @$"
-                function queryFunc(){{
-                    {codePiece}
-                }}
-                queryFunc();
-            ";
-            return _jsEngine.Evaluate(wrappedCode);
-        }
+        //private readonly V8ScriptEngine _jsEngine = new();
+        //public dynamic DynamicQueryByV8(string codePiece)
+        //{
+        //    IEnumerable<UsageRecord> usageRecords = _usageRecordsRepository.UsageRecords.AsNoTracking().ToList();
+        //    _jsEngine.AddHostObject(nameof(usageRecords), usageRecords);
+        //    string wrappedCode = @$"
+        //        function queryFunc(){{
+        //            {codePiece}
+        //        }}
+        //        queryFunc();
+        //    ";
+        //    return _jsEngine.Evaluate(wrappedCode);
+        //}
     }
 }

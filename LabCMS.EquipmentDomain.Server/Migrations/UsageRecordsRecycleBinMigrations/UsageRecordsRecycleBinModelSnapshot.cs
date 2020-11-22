@@ -3,20 +3,18 @@ using System;
 using LabCMS.EquipmentDomain.Server.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRepositoryMigrations
+namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRecycleBinMigrations
 {
-    [DbContext(typeof(UsageRecordsRepository))]
-    [Migration("20201029064632_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(UsageRecordsRecycleBin))]
+    partial class UsageRecordsRecycleBinModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.0-rc.1.20451.13");
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("LabCMS.EquipmentDomain.Shared.Models.UsageRecord", b =>
                 {
@@ -47,7 +45,7 @@ namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRepositoryMigrati
 
                     b.HasKey("Id");
 
-                    b.ToTable("UsageRecords");
+                    b.ToTable("SoftDeletedUsageRecords");
                 });
 #pragma warning restore 612, 618
         }

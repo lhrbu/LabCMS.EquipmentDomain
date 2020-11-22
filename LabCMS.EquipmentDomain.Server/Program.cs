@@ -21,14 +21,10 @@ namespace LabCMS.EquipmentDomain.Server
     {
         public static async Task Main(string[] args)
         {
-            //TestDynamicQueryService(args);
             RegisterSyncfusion();
-            //TestSyncfusionXoi();
             IHost host = CreateHostBuilder(args).Build();
             await InitializeCache(host);
             await host.RunAsync();
-
-            //TestDynamicQueryService(args);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -38,25 +34,17 @@ namespace LabCMS.EquipmentDomain.Server
                     webBuilder.UseStartup<Startup>();
                 });
 
-        private static async Task InitializeCache(IHost host)
-        {
-            //ProjectsWebCacheService projectsWebCacheService = host.Services
-            //    .GetRequiredService<ProjectsWebCacheService>();
-            //Task task = projectsWebCacheService.RefreshCacheAsync();
-            //EquipmentHourlyRatesLocalCacheService equipmentHourlyRatesLocalCacheService = host.Services
-            //    .GetRequiredService<EquipmentHourlyRatesLocalCacheService>();
-            //equipmentHourlyRatesLocalCacheService.RefreshCache();
-            //await task;
+        private static async Task InitializeCache(IHost host)=>
             await host.Services.GetRequiredService<ReloadCacheService>().ReloadCacheAsync();
-        }
+        
         static void TestDynamicQueryService(string[] args)
         {
             IHost host = CreateHostBuilder(args).Build();
             using var scope = host.Services.CreateScope();
             var service= scope.ServiceProvider.GetRequiredService<DynamicQueryService>();
             Guid assemblyId =Guid.NewGuid();
-            var result = service.DynamicQueryByV8("return usageRecords.Count");
-            Type type = result.GetType();
+            //var result = service.DynamicQueryByV8("return usageRecords.Count");
+            //Type type = result.GetType();
         }
 
         

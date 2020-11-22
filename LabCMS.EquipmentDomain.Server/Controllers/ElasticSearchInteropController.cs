@@ -53,9 +53,6 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
             if(recordsNeedToAdd.Any()){
                 await _elasticInterop.IndexManyAsync(recordsNeedToAdd);
             }
-
-            //await _elasticSearch.RemoveAllAsync();
-            //await _elasticSearch.IndexManyAsync(usageRecords);
         }
     }
 }

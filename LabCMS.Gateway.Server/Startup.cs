@@ -41,10 +41,12 @@ namespace LabCMS.Gateway.Server
         {
             app.UseRemoteIPAddressProviderForSerilog();
             ICollection<string> ipAddresses = app.ServerFeatures.Get<IServerAddressesFeature>().Addresses;
-            Console.WriteLine($"ASP NET Core now Listenning on: {ipAddresses.First()}");
-            Log.Logger.Information("ASP NET Core now Listenning on: {Address}"
-                ,ipAddresses);
+
+            //Console.WriteLine($"ASP NET Core now Listenning on: {ipAddresses.First()}");
+            Log.Logger.Warning("ASP NET Core now Listenning on: {Address}"
+                , ipAddresses);
             app.UseSerilogRequestLogging();
+            
             app.UseRouting();
             app.UseOcelot();
             app.UseConsulAsServiceProvider(nameof(Gateway));

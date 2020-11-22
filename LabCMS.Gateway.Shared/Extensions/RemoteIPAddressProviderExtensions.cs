@@ -15,7 +15,7 @@ namespace LabCMS.Gateway.Shared.Extensions
     {
         private readonly static string _outputTemplate =
                "[{Timestamp:yyyy/MM/dd HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}";
-        
+
         public static void InitializeLogger() =>
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
@@ -23,7 +23,8 @@ namespace LabCMS.Gateway.Shared.Extensions
                 .MinimumLevel.Override("Ocelot", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
                 //.WriteTo.Console(outputTemplate: _outputTemplate)
-                .WriteTo.File("Gateway.log",outputTemplate:_outputTemplate)
+                .WriteTo.File("Gateway.log",LogEventLevel.Information, outputTemplate: _outputTemplate)
+                .WriteTo.Console(LogEventLevel.Warning,outputTemplate:_outputTemplate)
                 //.WriteTo.SQLite("Logs/Log.db")
                 .CreateLogger();
         

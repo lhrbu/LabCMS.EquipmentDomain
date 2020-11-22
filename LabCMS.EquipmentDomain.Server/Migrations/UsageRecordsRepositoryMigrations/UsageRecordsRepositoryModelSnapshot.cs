@@ -14,7 +14,7 @@ namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRepositoryMigrati
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.0-rc.1.20451.13");
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("LabCMS.EquipmentDomain.Shared.Models.UsageRecord", b =>
                 {

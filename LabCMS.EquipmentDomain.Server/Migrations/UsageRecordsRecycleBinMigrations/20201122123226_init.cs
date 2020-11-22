@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRepositoryMigrations
+namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRecycleBinMigrations
 {
-    public partial class InitialCreate : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UsageRecords",
+                name: "SoftDeletedUsageRecords",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -22,14 +22,14 @@ namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRepositoryMigrati
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsageRecords", x => x.Id);
+                    table.PrimaryKey("PK_SoftDeletedUsageRecords", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UsageRecords");
+                name: "SoftDeletedUsageRecords");
         }
     }
 }

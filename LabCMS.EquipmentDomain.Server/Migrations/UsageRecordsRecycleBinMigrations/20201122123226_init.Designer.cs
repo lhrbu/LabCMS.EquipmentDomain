@@ -6,17 +6,17 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace LabCMS.EquipmentDomain.Server.Migrations
+namespace LabCMS.EquipmentDomain.Server.Migrations.UsageRecordsRecycleBinMigrations
 {
     [DbContext(typeof(UsageRecordsRecycleBin))]
-    [Migration("20201029064620_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20201122123226_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.0-rc.1.20451.13");
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("LabCMS.EquipmentDomain.Shared.Models.UsageRecord", b =>
                 {

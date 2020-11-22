@@ -14,29 +14,19 @@ namespace LabCMS.EquipmentDomain.Server.Services
     {
         
         private readonly ElasticClient _elasticClient;
-        public string IndexName = nameof(UsageRecord).ToLower();
+        public string IndexName { get; }
         public ElasticSearchInteropService(
             IConfiguration configuration)
         {
             _elasticClient = new(new Uri(configuration.GetConnectionString("ElasticSearchUrl")));
+
+            string? usageRecordsIndex = configuration["UsageRecordsIndex"];
+            if(usageRecordsIndex is null) { usageRecordsIndex = "usagerecords-actual"; }
+            IndexName = usageRecordsIndex;
             if(!ValidateIndex())
             { throw new InvalidOperationException($"Index: {IndexName} was not created in ES!"); }
         }
-        private bool ValidateIndex() => _elasticClient.Indices.Exists(IndexName+"haha").Exists;
-        //private bool TryCreateIndex()
-        //{
-        //    if (!_elasticClient.Indices.Exists(IndexName).Exists)
-        //    {
-        //        CreateIndexResponse response = _elasticClient.Indices.Create(IndexName, builder => 
-        //        {
-        //            return builder.Map<UsageRecord>(mapper => mapper.AutoMap());
-        //        });
-        //        if (!response.IsValid)
-        //        { Log.Logger.Information("Can't create Index,see {DebugInfo}", response.DebugInformation);}
-        //        else { return true; }
-        //    }
-        //    return false;
-        //}
+        private bool ValidateIndex() => _elasticClient.Indices.Exists(IndexName).Exists;
 
         public async ValueTask IndexAsync(UsageRecord usageRecord)=>
             await _elasticClient.IndexAsync(usageRecord, item => item.Index(IndexName));
