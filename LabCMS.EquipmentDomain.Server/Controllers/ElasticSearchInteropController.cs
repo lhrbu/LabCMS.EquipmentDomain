@@ -15,11 +15,8 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
     {
         public bool Equals(UsageRecord? x, UsageRecord? y)
         {
-            if(x.Id == null || y.Id==null)
-            {
-                Console.WriteLine("Here");
-            }
-            return x?.Id == y?.Id;
+            if((x is null) && (y is null)) { return false; }
+            else { return x?.Id == y?.Id; }
         }
         public int GetHashCode(UsageRecord obj)=>obj.Id.GetHashCode();
     }

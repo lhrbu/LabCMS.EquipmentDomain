@@ -1,6 +1,7 @@
 ﻿using LabCMS.EquipmentDomain.Shared.Models;
 using Microsoft.Extensions.Configuration;
 using Nest;
+using Elasticsearch.Net;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace LabCMS.EquipmentDomain.Server.Services
 {
     public class ElasticSearchInteropService
     {
+        
         private readonly ElasticClient _elasticClient;
         public string IndexName = nameof(UsageRecord).ToLower();
         public ElasticSearchInteropService(
@@ -23,8 +25,10 @@ namespace LabCMS.EquipmentDomain.Server.Services
         {
             if (!_elasticClient.Indices.Exists(IndexName).Exists)
             {
-                CreateIndexResponse response = _elasticClient.Indices.Create(IndexName, builder =>
-                     builder.Map<UsageRecord>(mapper => mapper.AutoMap()));
+                CreateIndexResponse response = _elasticClient.Indices.Create(IndexName, builder => 
+                {
+                    return builder.Map<UsageRecord>(mapper => mapper.AutoMap());
+                });
                 if (!response.IsValid)
                 { Log.Logger.Information("Can't create Index,see {DebugInfo}", response.DebugInformation);}
                 else { return true; }
