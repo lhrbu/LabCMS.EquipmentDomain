@@ -28,6 +28,7 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
             _usageRecordsRecyclBin = usageRecordsRecycleBin;
         }
         [HttpGet]
+        
         public IAsyncEnumerable<EquipmentHourlyRate> GetAsync() =>
             _repository.EquipmentHourlyRates.AsNoTracking().AsAsyncEnumerable();
         

@@ -41,16 +41,10 @@ namespace LabCMS.EquipmentDomain.Server.Controllers
         public async ValueTask SyncWithDatabaseAsync()
         { 
             IEnumerable<UsageRecord> usageRecords = _usageRecordsRepository.UsageRecords.AsNoTracking();
-            var count = usageRecords.Count();
-            var res = usageRecords.Where(item=>item.Id is null).ToArray();
 
             IEnumerable<UsageRecord> usageRecordsInES = await _elasticInterop.SearchAllAsync();
-            var reses = usageRecordsInES.Where(item=>item.Id is null).ToArray();
-            // await _elasticInterop.RemoveManyAsync(reses);
-            // Only in ES but not in sqlite, which means need to be deleted
-            IEnumerable<UsageRecord> recordsNeedToDelete = usageRecordsInES.Except(usageRecords,_comparer).ToList();
             
-            // Only in database but not in sqlite, which means need to be added
+            IEnumerable<UsageRecord> recordsNeedToDelete = usageRecordsInES.Except(usageRecords,_comparer).ToList();
             IEnumerable<UsageRecord> recordsNeedToAdd = usageRecords.Except(usageRecordsInES,_comparer).ToList();
 
             if(recordsNeedToDelete.Any()){

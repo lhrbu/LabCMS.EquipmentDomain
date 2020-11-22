@@ -17,10 +17,6 @@ using LabCMS.EquipmentDomain.Shared.Services;
 
 namespace LabCMS.EquipmentDomain.Server
 {
-    public record DTO(int A,string B)
-    {
-        public int C => 1;
-    }
     public class Program
     {
         public static async Task Main(string[] args)
@@ -63,23 +59,7 @@ namespace LabCMS.EquipmentDomain.Server
             Type type = result.GetType();
         }
 
-        private static void TestSyncfusionXoi()
-        {
-            using ExcelEngine excelEngine = new();
-            IApplication app = excelEngine.Excel;
-            app.DefaultVersion = ExcelVersion.Xlsx;
-            IWorkbook workbook = app.Workbooks.Create(1);
-            IWorksheet worksheet = workbook.Worksheets.First();
-            var data = new[]
-            {
-                new DTO(1,"Row1"),
-                new DTO(2,"Row2"),
-                new DTO(3,"Row3")
-            };
-            worksheet.ImportData(data, 2, 1, true);
-            using Stream stream = File.OpenWrite("1.xlsx");
-            workbook.SaveAs(stream);
-        }
+        
 
         private static void RegisterSyncfusion()=>
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
